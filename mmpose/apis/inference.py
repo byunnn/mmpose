@@ -130,7 +130,8 @@ def init_model(config: Union[str, Path, Config],
     return model
 
 
-def inference_topdown(model: nn.Module,
+def inference_topdown(
+                      model: nn.Module,
                       img: Union[np.ndarray, str],
                       bboxes: Optional[Union[List, np.ndarray]] = None,
                       bbox_format: str = 'xyxy') -> List[PoseDataSample]:
@@ -176,13 +177,14 @@ def inference_topdown(model: nn.Module,
 
     # construct batch data samples
     data_list = []
-    for bbox in bboxes:
+    for i, bbox in enumerate(bboxes):
         if isinstance(img, str):
             data_info = dict(img_path=img)
         else:
             data_info = dict(img=img)
         data_info['bbox'] = bbox[None]  # shape (1, 4)
         data_info['bbox_score'] = np.ones(1, dtype=np.float32)  # shape (1,)
+
         data_info.update(model.dataset_meta)
         data_list.append(pipeline(data_info))
 

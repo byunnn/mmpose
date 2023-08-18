@@ -22,9 +22,17 @@ def process_one_image(args,
                       show_interval=0):
     """Visualize predicted keypoints (and heatmaps) of one image."""
 
+    #fps
+    last_time = time.time()
+
     # inference a single image
     batch_results = inference_bottomup(pose_estimator, img)
     results = batch_results[0]
+    fps = 1/(time.time()-last_time)
+    print('FPS : {}'.format(fps))
+    img = cv2.putText(img, 'Bottom-up', (25, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
+
+    img = cv2.putText(img, 'fps: '+ "%.2f"%(fps), (25, 90), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
 
     # show the results
     if isinstance(img, str):
