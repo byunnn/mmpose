@@ -99,19 +99,11 @@ def process_one_image(args,
                 else:
                     action_dict[obj_id] = [""]
                     action_dict[obj_id].append(action)
-
-
-                print("지금 행동 ", action)
-
-                print("이전 행동", action_dict[obj_id][-2])
-
-                
+        
                 if action != action_dict[obj_id][-2] :
 
                     action = "" 
-                
-                print("출력 행동", action)
-
+                    
                 img = cv2.putText(img,  '{} '.format(action), (d[0]+20, d[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
 
         elif model_type == 'lstm' :
